@@ -1,0 +1,3 @@
+[submodule "lib/pio_usb"]
+	path = lib/pio_usb
+	url = https://github.com/sekigon-gonnoc/Pico-PIO-USB.git
