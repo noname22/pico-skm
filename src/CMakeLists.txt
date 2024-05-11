@@ -1,5 +1,6 @@
 add_executable(${target_name}
         main.c
+        skmhid.c
         )
 
 target_compile_definitions(${target_name} PRIVATE SKM_PIO_USB_PIN_DP=${PIO_USB_PIN_DP})
