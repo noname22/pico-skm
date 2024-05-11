@@ -137,13 +137,14 @@ int main()
     set_sys_clock_khz(120000, true);
 
     stdio_init_all();
-    printf("hello!");
 
     sleep_ms(10);
 
     multicore_reset_core1();
     // all USB task run in core1
     multicore_launch_core1(core1_main);
+
+    bool keyPress = true;
 
     // move mouse pointer every 0.5s
     while (true)
@@ -155,9 +156,22 @@ int main()
             mouse_report.x = 10;
             mouse_report.y = 10;
 
-            endpoint_t *ep = pio_usb_get_endpoint(usb_device, 2);
-            pio_usb_set_out_data(ep, (uint8_t *)&mouse_report, sizeof(mouse_report));
+            printf("Moving mouse...\n");
+
+            endpoint_t *epm = pio_usb_get_endpoint(usb_device, 2);
+            pio_usb_set_out_data(epm, (uint8_t *)&mouse_report, sizeof(mouse_report));
+            sleep_ms(250);
+
+            printf("Pressing key...\n");
+
+            hid_keyboard_report_t keyboard_report = {0};
+
+            endpoint_t *epk = pio_usb_get_endpoint(usb_device, 1);
+            keyboard_report.keycode[0] = keyPress ? HID_KEY_A : HID_KEY_NONE;
+            pio_usb_set_out_data(epk, (uint8_t *)&keyboard_report, sizeof(keyboard_report));
+            keyPress = !keyPress;
+
+            sleep_ms(250);
         }
-        sleep_ms(500);
     }
 }

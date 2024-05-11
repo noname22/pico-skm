@@ -1,11 +1,11 @@
-set(target_name pico_skm)
-
 cmake_minimum_required(VERSION 3.12)
+
+set(target_name pico_skm)
+project(${target_name} C CXX ASM)
 
 include(pico_sdk_import.cmake)
 include(pico_extras_import_optional.cmake)
 
-project(${target_name} C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
